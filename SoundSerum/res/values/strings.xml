@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="playButton">Play</string>
+    <string name="app_name">SoundSerum</string>
+    <string name="pauseButton">Pause</string>
+    <string name="stopButton">Stop</string>
+    <string name="nextButton">Next</string>
+    <string name="previousButton">Previous</string>
+    <string name="dislikeButton">Dislike</string>
+    <string name="likeButton">Like</string>
+    <string name="downloadButton">Download</string>
+    <string name="by">by</string>
+
+</resources>
