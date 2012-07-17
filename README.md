@@ -1,4 +1,4 @@
 SoundSerum
 ==========
 
-Streaming music app for soundserum.com
+Android app to stream music from soundserum.com
