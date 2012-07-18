@@ -887,6 +887,7 @@ public class Main extends Activity {
     private TextView currentSongText, currentArtistText;
     private String currentArtist, currentSong;
     private int touched = 0; // boolean for whether seek-bar is touched, needed to block race conditions for threads
+    private int mediaReady = 0;
     
     
     @Override
@@ -931,7 +932,7 @@ public class Main extends Activity {
             		mediaplayer.pause();
             		playButton.setBackgroundResource(R.drawable.ssplay);
             	}
-            	else {
+            	else if ( mediaReady == 1 ){
             		mediaplayer.start();
             		playButton.setBackgroundResource(R.drawable.sspause);
             	}
@@ -994,6 +995,7 @@ public class Main extends Activity {
 			@Override
 			public void onPrepared(MediaPlayer arg0) {
 				seekSongTime.setMax(mediaplayer.getDuration());
+				mediaReady = 1;
 				new Thread(new Runnable() {
 			        public void run() {
 			        	while ( mediaplayer.isPlaying() && touched == 0) {
@@ -1018,7 +1020,8 @@ public class Main extends Activity {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				touched = 0;
-				mediaplayer.seekTo(seekSongTime.getProgress());
+				if ( mediaReady == 1)
+					mediaplayer.seekTo(seekSongTime.getProgress());
 			}
 			
 			@Override
@@ -1037,6 +1040,7 @@ public class Main extends Activity {
     	if ( mediaplayer.isPlaying() ) {
     		mediaplayer.stop();
     	}
+    	mediaReady = 0;
     	mediaplayer.reset();
         try {
 			mediaplayer.setDataSource(this, song);
