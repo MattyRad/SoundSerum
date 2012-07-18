@@ -23,6 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Main extends Activity {
+	
+	// TODO
+	// Get dynamic song list instead of static
+	// Properly extract metadata
+	// Put in controls to handle impatient users (namely seekbar impatience)
+	
     
     private String[] songs = {"http://www.soundserum.com/mp3/1990-The_Phase.mp3"
  , "http://www.soundserum.com/mp3/Above_APlace-YOU-TEE-IGH.mp3"
@@ -887,6 +893,7 @@ public class Main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        context = getApplicationContext();
         
         // =========================================
         // INIT
@@ -894,9 +901,8 @@ public class Main extends Activity {
         
         // Music Objects
     	mediaplayer = new MediaPlayer();
-    	context = getApplicationContext();
     	songURL = getRandomSongURL();
-    	previousSongURL = songURL;
+    	previousSongURL = songURL; // previous song and first song are the same
         
         // Buttons
         final ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
@@ -923,11 +929,11 @@ public class Main extends Activity {
             public void onClick(View v) {
             	if ( mediaplayer.isPlaying()) {
             		mediaplayer.pause();
-            		playButton.setBackgroundResource(R.drawable.sspause);
+            		playButton.setBackgroundResource(R.drawable.ssplay);
             	}
             	else {
             		mediaplayer.start();
-            		playButton.setBackgroundResource(R.drawable.ssplay);
+            		playButton.setBackgroundResource(R.drawable.sspause);
             	}
             }
         });
@@ -963,6 +969,7 @@ public class Main extends Activity {
 		});
         
         downloadButton.setOnClickListener(new View.OnClickListener() {
+        	
             public void onClick(View v) {
                 DownloadManager.Request request = new DownloadManager.Request(songURL);
                 request.setDescription(currentArtist);
@@ -977,6 +984,12 @@ public class Main extends Activity {
         });
         
         mediaplayer.setOnPreparedListener(new OnPreparedListener() {
+        	
+        	// Once the mediaplayer is ready, set the max value for the seekbar and
+        	// start a new thread that constantly updates the seekbar time
+        	
+        	// NOTE: EFFICIENCY??? Am I starting many new thread here? Come back to this
+        	// It may be extremely inefficient. Does the garbage collector handle this?
 			
 			@Override
 			public void onPrepared(MediaPlayer arg0) {
@@ -1021,21 +1034,45 @@ public class Main extends Activity {
     }
     
     public void loadSong(Uri song){
+    	if ( mediaplayer.isPlaying() ) {
+    		mediaplayer.stop();
+    	}
+    	mediaplayer.reset();
         try {
-        	if ( mediaplayer.isPlaying() ) {
-        		mediaplayer.stop();
-        	}
-        	mediaplayer.reset();
-            mediaplayer.setDataSource(this, song);
-            mediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaplayer.prepare();
-            setNowPlayingText();
-        } catch (IOException e) {
-            Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
-            e.printStackTrace();
-        }
+			mediaplayer.setDataSource(this, song);
+		} catch (IllegalArgumentException e) {
+			Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
+			e.printStackTrace();
+		}
+        
+        mediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        
+        new Thread(new Runnable() { // This might also be inefficient
+			
+			@Override
+			public void run() {
+				try {
+					mediaplayer.prepare();
+					mediaplayer.start();
+				}
+				catch (Exception e) {
+					Toast.makeText(context, "Something's wrong with the G Diffuser", 5).show();
+				}
+			}
+		}).start();
+        
+        setNowPlayingText();
 
-        mediaplayer.start();
+        
     }
     
     public Uri getRandomSongURL(){
