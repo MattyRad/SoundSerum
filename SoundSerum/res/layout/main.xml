@@ -51,7 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/currentArtist"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ssplay"
+        android:background="@drawable/sspause"
         android:contentDescription="@string/app_name" />
 
     <ImageButton
