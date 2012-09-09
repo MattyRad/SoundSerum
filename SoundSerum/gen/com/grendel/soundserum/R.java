@@ -31,11 +31,11 @@ public final class R {
         public static final int currentArtist=0x7f050003;
         public static final int currentSong=0x7f050001;
         public static final int downloadButton=0x7f050007;
+        public static final int exitButton=0x7f050008;
         public static final int header=0x7f050000;
         public static final int nextButton=0x7f050005;
         public static final int playButton=0x7f050004;
         public static final int previousButton=0x7f050006;
-        public static final int seekSongTime=0x7f050008;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -45,6 +45,7 @@ public final class R {
         public static final int by=0x7f040009;
         public static final int dislikeButton=0x7f040006;
         public static final int downloadButton=0x7f040008;
+        public static final int exit=0x7f04000a;
         public static final int likeButton=0x7f040007;
         public static final int nextButton=0x7f040004;
         public static final int pauseButton=0x7f040002;

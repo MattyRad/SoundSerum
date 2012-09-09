@@ -11,5 +11,6 @@
     <string name="likeButton">Like</string>
     <string name="downloadButton">Download</string>
     <string name="by">by</string>
+    <string name="exit">Exit</string>
 
 </resources>

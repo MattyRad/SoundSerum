@@ -20,7 +20,8 @@
         android:text="@string/playButton"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/header"
-        android:textColor="#42E800" />
+        android:textColor="#42E800"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <TextView
         android:id="@+id/by"
@@ -30,7 +31,6 @@
         android:layout_below="@+id/currentSong"
         android:layout_centerHorizontal="true"
         android:textColor="#125900"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp" />
     
@@ -41,7 +41,8 @@
         android:text="@string/playButton"
         android:layout_below="@+id/by"
         android:layout_centerHorizontal="true"
-        android:textColor="#42E800" />
+        android:textColor="#42E800"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
         android:id="@+id/playButton"
@@ -87,7 +88,7 @@
         android:layout_marginTop="30dp"
         android:contentDescription="@string/app_name" />
     
-    <SeekBar
+    <!--<SeekBar
         android:id="@+id/seekSongTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,5 +96,18 @@
         android:layout_centerHorizontal="true"
         android:progressDrawable="@drawable/prog"
         android:layout_marginBottom="20dp" />
+     -->
+
+    <Button
+        android:id="@+id/exitButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/exit"
+        android:background="#000000"
+        android:textColor="#00FF0A"
+        android:padding="15dp" />
 
 </RelativeLayout>
