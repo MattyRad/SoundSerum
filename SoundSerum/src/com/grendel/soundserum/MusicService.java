@@ -25,6 +25,8 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.IBinder;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 public class MusicService extends Service {
@@ -32,6 +34,7 @@ public class MusicService extends Service {
 	public static JSONObject songInfo, json;
 	public static JSONArray tracks;
 	public static String id, hash, recent, location, creator, title, score;
+	public static String previouscreator, previoustitle;
 	public static Uri previousSongURL, songURL;
 	public static Random random;
 	public static Context context;
@@ -78,6 +81,15 @@ public class MusicService extends Service {
 			}
 		});
         
+        Main.exitButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				if (player.isPlaying()) pause();
+				stopForeground(true);
+				stopSelf();
+			}
+		});
+        
     }
 	
 	@Override
@@ -90,6 +102,8 @@ public class MusicService extends Service {
 	
 	public static void getNewSongInfo(){
 		previousSongURL = songURL;
+		previouscreator = creator;
+		previoustitle = title;
     	try {
 			songInfo = tracks.getJSONObject(random.nextInt(848));
 			id = songInfo.getString("id");
@@ -163,6 +177,8 @@ public class MusicService extends Service {
 	
 	public static void previous(){
 		songURL = previousSongURL;
+		creator = previouscreator;
+		title = previoustitle;
 		play();
 	}
 	
@@ -195,11 +211,7 @@ public class MusicService extends Service {
 		return null;
 	}
 	
-	/*public static void setSongTime(int position){
-	
+	public void suicide(){
+		stopForeground(true);
 	}
-	
-	public static int getSongLength(){
-		return player.getDuration();
-	}*/
 }

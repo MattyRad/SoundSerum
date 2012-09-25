@@ -25,13 +25,14 @@ public final class R {
         public static final int ssnext=0x7f02000b;
         public static final int sspause=0x7f02000c;
         public static final int ssplay=0x7f02000d;
+        public static final int stop=0x7f02000e;
     }
     public static final class id {
         public static final int by=0x7f050002;
         public static final int currentArtist=0x7f050003;
         public static final int currentSong=0x7f050001;
-        public static final int downloadButton=0x7f050007;
-        public static final int exitButton=0x7f050008;
+        public static final int downloadButton=0x7f050008;
+        public static final int exitButton=0x7f050007;
         public static final int header=0x7f050000;
         public static final int nextButton=0x7f050005;
         public static final int playButton=0x7f050004;

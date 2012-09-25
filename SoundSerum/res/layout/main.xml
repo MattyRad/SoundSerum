@@ -76,17 +76,6 @@
         android:background="@drawable/ssback"
         android:layout_marginRight="30dp"
         android:contentDescription="@string/app_name" />
-
-    <ImageButton
-        android:id="@+id/downloadButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/downloadButton"
-        android:layout_below="@+id/playButton"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ssdownload"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/app_name" />
     
     <!--<SeekBar
         android:id="@+id/seekSongTime"
@@ -98,16 +87,25 @@
         android:layout_marginBottom="20dp" />
      -->
 
-    <Button
+    <ImageButton
         android:id="@+id/exitButton"
-        style="?android:attr/buttonStyleSmall"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/stop"
+        android:layout_below="@+id/playButton"
+        android:text="@string/exit"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/downloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/exit"
-        android:background="#000000"
-        android:textColor="#00FF0A"
-        android:padding="15dp" />
+        android:layout_alignBottom="@+id/exitButton"
+        android:layout_alignRight="@+id/nextButton"
+        android:background="@drawable/ssdownload"
+        android:contentDescription="@string/app_name"
+        android:text="@string/downloadButton" />
 
 </RelativeLayout>

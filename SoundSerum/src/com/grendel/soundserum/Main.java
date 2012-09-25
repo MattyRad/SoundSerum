@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,19 +21,16 @@ public class Main extends Activity {
 	
 	// TODO
 	// Voting mechanism
-	// Previous song
-	// Exit option to kill app
 	// Seek song bar
 	// Wave control
 	
-	Context context;
-	ImageButton playButton;
-	ImageButton nextButton;
-	ImageButton previousButton;
-	ImageButton downloadButton;
-	Button exitButton;
-	Intent serviceIntent;
-	//SeekBar seekSongTime;
+	public Context context;
+	public static ImageButton playButton;
+	public ImageButton nextButton;
+	public ImageButton previousButton;
+	public ImageButton downloadButton;
+	public static ImageButton exitButton;
+	public Intent serviceIntent;
 	
 	static TextView songTitle;
 	static TextView songCreator;
@@ -62,8 +58,7 @@ public class Main extends Activity {
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         previousButton = (ImageButton) findViewById(R.id.previousButton);
         downloadButton = (ImageButton) findViewById(R.id.downloadButton);
-        exitButton = (Button) findViewById(R.id.exitButton);
-        //seekSongTime = (SeekBar) findViewById(R.id.seekSongTime);
+        exitButton = (ImageButton) findViewById(R.id.exitButton);
         
 		playButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -113,29 +108,15 @@ public class Main extends Activity {
             }
 		});
 		
-		exitButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				MusicService.pause();
-				stopService(serviceIntent);
-				finish();
+		exitButton.setOnTouchListener(new OnTouchListener() {
+			
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					finish();
+				}
+				return false;
 			}
 		});
-		
-		/*seekSongTime.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				//touched = false;
-				//if ( mediaReady == true )
-				//mediaplayer.seekTo(seekSongTime.getProgress());
-				//MusicService.setSongTime(seekSongTime.getProgress());
-			}
-			
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				//touched = true;
-			}
-			
-			public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {}
-		});*/
         
         /*
          * Start the music service
@@ -150,7 +131,7 @@ public class Main extends Activity {
     }
     
     /*
-     * I jacked this method from this website:http://www.mobile-web-consulting.de/post/5272654457/android-check-if-a-service-is-running
+     * I jacked this method from this web site: http://www.mobile-web-consulting.de/post/5272654457/android-check-if-a-service-is-running
      * There's probably a more proper way to handle activity-service interaction, but at this point I don't care.
      */
     private boolean isMusicServiceRunning() {
