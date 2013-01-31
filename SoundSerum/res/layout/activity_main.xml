@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/ssbackground" >
+    
+    <ImageView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/sslogo"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/currentSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="currentSong"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/header"
+        android:textColor="#42E800"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="by"
+        android:layout_below="@+id/currentSong"
+        android:layout_centerHorizontal="true"
+        android:textColor="#125900"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
+    
+    <TextView
+        android:id="@+id/currentArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="currentArtist"
+        android:layout_below="@+id/by"
+        android:layout_centerHorizontal="true"
+        android:textColor="#42E800"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/currentArtist"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/sspause"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/playButton"
+        android:layout_alignTop="@+id/playButton"
+        android:background="@drawable/ssnext"
+        android:layout_marginLeft="30dp"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/previousButton"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/playButton"
+        android:layout_alignTop="@+id/playButton"
+        android:background="@drawable/ssback"
+        android:layout_marginRight="30dp"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/downloadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/ssdownload"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>
