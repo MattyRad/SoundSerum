@@ -32,14 +32,13 @@ import android.widget.Toast;
 public class MainService extends Service {
 	
 	public String id, recent, hash, location, creator, title, score;
-	public Uri songURL;
+	public Uri songURL, previousSongURL;
 	public JSONObject songInfo, json;
 	public JSONArray tracks;
 	public Random random;
 	public MediaPlayer player;
 	public PendingIntent mNotificationAction;
 	public Context context;
-	
 	public boolean isPlaying;
 	
 	@Override
@@ -51,7 +50,7 @@ public class MainService extends Service {
 		player = new MediaPlayer();
 		isPlaying = false;
 		
-		// Get raw JSON-formatted playlist as string
+		// Get raw JSON-formatted play-list as string
 		String raw_json_playlist = getPlaylist();
 		
 		// Covert string to JSON Object list of tracks
@@ -62,6 +61,9 @@ public class MainService extends Service {
 			e.printStackTrace();
 		}
 		
+		/*
+         * Set MediaPlayer Listeners
+         */
         player.setOnPreparedListener(new OnPreparedListener() {
 
 			public void onPrepared(MediaPlayer mp) {
@@ -80,13 +82,15 @@ public class MainService extends Service {
 			}
 		});
 		
+        /*
+         * Default Action: Load new song, initialize previousSongURL with something so it doesn't crash
+         */
         loadNewSong();
+        previousSongURL = songURL;
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    // We want this service to continue running until it is explicitly
-	    // stopped, so return sticky.
 		
 		boolean NEXT_SONG = intent.getBooleanExtra("NEXT_SONG", false);
 		boolean PREVIOUS_SONG = intent.getBooleanExtra("PREVIOUS_SONG", false);
@@ -103,7 +107,7 @@ public class MainService extends Service {
 			pause();
 		}
 		else if (DOWNLOAD_SONG == true){
-			downloadSong();
+			download();
 		}
 		
 	    return START_NOT_STICKY;
@@ -141,8 +145,7 @@ public class MainService extends Service {
 	
 	public void loadNewSong(){
 		getRandomSong();
-		MainActivity.songTitle.setText(title);
-		MainActivity.songCreator.setText(creator);
+		updateText();
 		play();
 	}
 	
@@ -174,11 +177,15 @@ public class MainService extends Service {
 	}
 	
 	public void previous(){
-		//isPlaying = false;
+		isPlaying = false;
+		songURL = previousSongURL;
+		updateText();
+		play();
 	}
 	
 	public void getRandomSong(){
 		try {
+			previousSongURL = songURL;
 			songInfo = tracks.getJSONObject(random.nextInt(848));
 			id = songInfo.getString("id");
 			recent = songInfo.getString("recent");
@@ -194,7 +201,12 @@ public class MainService extends Service {
 		}
     }
 	
-	public void downloadSong(){
+	public void updateText() {
+		MainActivity.songTitle.setText(title);
+		MainActivity.songCreator.setText(creator);
+	}
+	
+	public void download(){
 		DownloadManager.Request request = new DownloadManager.Request(songURL);
         request.setDescription(creator);
         request.setTitle(title);
@@ -203,7 +215,7 @@ public class MainService extends Service {
         // get download service and enqueue file
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
-        Toast.makeText(context, "Downloading", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Downloading " + title + " by " + creator, Toast.LENGTH_SHORT).show();
 	}
 	
 	public String getPlaylist() {
@@ -237,6 +249,9 @@ public class MainService extends Service {
 	
 	@Override
     public void onDestroy() {
+		if (isPlaying) {
+			stopForeground(true); 
+		}
         player.stop();
         player.release();
     }

@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+	public boolean isPaused;
+	public Context context;
 	public static TextView songTitle, songCreator;
 	public ImageButton playButton, nextButton, previousButton, downloadButton, exitButton;
-	public Context context;
-	public boolean isPaused;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class MainActivity extends Activity {
         downloadButton = (ImageButton) findViewById(R.id.downloadButton);
         
         playButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(context, MainService.class);
 				i.putExtra("PAUSE_SONG", true);
@@ -60,15 +62,17 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-
+		
 		previousButton.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					previousButton.setBackgroundResource(R.drawable.previouspress);
 				}
 				else if (event.getAction() == MotionEvent.ACTION_UP) {
 					previousButton.setBackgroundResource(R.drawable.ssback);
-					//MainService.previous();
+					playButton.setBackgroundResource(R.drawable.sspause);
 					Intent i = new Intent(context, MainService.class);
 					i.putExtra("PREVIOUS_SONG", true);
 					startService(i);
@@ -76,14 +80,17 @@ public class MainActivity extends Activity {
 				return false;
 			}
 		});
-
+		
 		nextButton.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					nextButton.setBackgroundResource(R.drawable.nextpress);
 				}
 				else if (event.getAction() == MotionEvent.ACTION_UP) {
 					nextButton.setBackgroundResource(R.drawable.ssnext);
+					playButton.setBackgroundResource(R.drawable.sspause);
 					Intent i = new Intent(context, MainService.class);
 					i.putExtra("NEXT_SONG", true);
 					startService(i);
@@ -93,6 +100,7 @@ public class MainActivity extends Activity {
 		});
 		
 		downloadButton.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(context, MainService.class);

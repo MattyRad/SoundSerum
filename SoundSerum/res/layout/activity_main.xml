@@ -17,17 +17,16 @@
         android:id="@+id/currentSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="currentSong"
+        android:text="@string/currentSong"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/header"
-        android:textColor="#42E800"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textColor="#42E800" />
     
     <TextView
         android:id="@+id/by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="by"
+        android:text="@string/by"
         android:layout_below="@+id/currentSong"
         android:layout_centerHorizontal="true"
         android:textColor="#125900"
@@ -38,11 +37,10 @@
         android:id="@+id/currentArtist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="currentArtist"
+        android:text="@string/currentArtist"
         android:layout_below="@+id/by"
         android:layout_centerHorizontal="true"
-        android:textColor="#42E800"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textColor="#42E800" />
 
     <ImageButton
         android:id="@+id/playButton"

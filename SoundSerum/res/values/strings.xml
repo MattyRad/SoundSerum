@@ -4,5 +4,8 @@
     <string name="app_name">SoundSerum</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="currentSong">currentSong</string>
+    <string name="by">by</string>
+    <string name="currentArtist">currentArtist</string>
 
 </resources>
